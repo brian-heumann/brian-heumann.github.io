@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Welcome</title>
+    <link>https://brian-heumann.github.io/tags/</link>
+    <description>Recent content in Tags on Welcome</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>de-de</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Tue, 17 Nov 2020 11:35:50 +0100</lastBuildDate><atom:link href="https://brian-heumann.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>website</title>
+      <link>https://brian-heumann.github.io/tags/website/</link>
+      <pubDate>Tue, 17 Nov 2020 11:35:50 +0100</pubDate>
+      
+      <guid>https://brian-heumann.github.io/tags/website/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
