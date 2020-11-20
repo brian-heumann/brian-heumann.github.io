@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="Brian Heumann ">
+<meta name="description" content="Für zeitgesteuerte Aufgaben ist der Cron Daemon auf dem Raspberry Pi immer eine gute Wahl. So möchte ich, das meine Raspberry Pis regelmässig einen Health Report an einen zentralen Server melden. Damit erhalte ich an einer Stelle die Einsicht, wie es meinen Geräten eigentlich so geht. Für diesen Bericht schreibe ich ein Python Script, das den Zustand von Speicher und Disk Space ausliest und diese Daten per HTTP POST Request alle 10 Minuten versendet." />
+<meta name="keywords" content="" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://brian-heumann.github.io/posts/cronjobs-and-containers/" />
+
+
+    <title>
+        
+            Cronjobs und Container :: Welcome  — Brian&#39;s Website
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="/main.393856bf2c430bb6c01d7af07c6fe966e7cce8073435cfbbc46e590bab7405ef.css">
+
+
+
+
+
+
+<meta itemprop="name" content="Cronjobs und Container">
+<meta itemprop="description" content="Für zeitgesteuerte Aufgaben ist der Cron Daemon auf dem Raspberry Pi immer eine gute Wahl. So möchte ich, das meine Raspberry Pis regelmässig einen Health Report an einen zentralen Server melden. Damit erhalte ich an einer Stelle die Einsicht, wie es meinen Geräten eigentlich so geht. Für diesen Bericht schreibe ich ein Python Script, das den Zustand von Speicher und Disk Space ausliest und diese Daten per HTTP POST Request alle 10 Minuten versendet.">
+<meta itemprop="datePublished" content="2020-11-20T17:47:53+01:00" />
+<meta itemprop="dateModified" content="2020-11-20T17:47:53+01:00" />
+<meta itemprop="wordCount" content="704">
+<meta itemprop="image" content="https://brian-heumann.github.io"/>
+
+
+
+<meta itemprop="keywords" content="" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://brian-heumann.github.io"/>
+
+<meta name="twitter:title" content="Cronjobs und Container"/>
+<meta name="twitter:description" content="Für zeitgesteuerte Aufgaben ist der Cron Daemon auf dem Raspberry Pi immer eine gute Wahl. So möchte ich, das meine Raspberry Pis regelmässig einen Health Report an einen zentralen Server melden. Damit erhalte ich an einer Stelle die Einsicht, wie es meinen Geräten eigentlich so geht. Für diesen Bericht schreibe ich ein Python Script, das den Zustand von Speicher und Disk Space ausliest und diese Daten per HTTP POST Request alle 10 Minuten versendet."/>
+
+
+
+    <meta property="og:title" content="Cronjobs und Container" />
+<meta property="og:description" content="Für zeitgesteuerte Aufgaben ist der Cron Daemon auf dem Raspberry Pi immer eine gute Wahl. So möchte ich, das meine Raspberry Pis regelmässig einen Health Report an einen zentralen Server melden. Damit erhalte ich an einer Stelle die Einsicht, wie es meinen Geräten eigentlich so geht. Für diesen Bericht schreibe ich ein Python Script, das den Zustand von Speicher und Disk Space ausliest und diese Daten per HTTP POST Request alle 10 Minuten versendet." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://brian-heumann.github.io/posts/cronjobs-and-containers/" />
+<meta property="og:image" content="https://brian-heumann.github.io"/>
+<meta property="article:published_time" content="2020-11-20T17:47:53+01:00" />
+<meta property="article:modified_time" content="2020-11-20T17:47:53+01:00" /><meta property="og:site_name" content="Welcome" />
+
+
+
+
+
+
+    <meta property="article:published_time" content="2020-11-20 17:47:53 &#43;0100 CET" />
+
+
+
+
+
+
+
+
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">goto home</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://brian-heumann.github.io/about">About</a></li><li><a href="https://brian-heumann.github.io/posts">Blog</a></li><li><a href="https://brian-heumann.github.io/contact">Contact</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+  <main class="post">
+
+    <div class="post-info">
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        4 minutes
+
+        
+      </p>
+    </div>
+
+    <article>
+      <h1 class="post-title">
+        <a href="https://brian-heumann.github.io/posts/cronjobs-and-containers/">Cronjobs und Container</a>
+      </h1>
+
+      
+
+      <div class="post-content">
+        <p>Für zeitgesteuerte Aufgaben ist der Cron Daemon auf dem Raspberry Pi immer eine gute Wahl. So möchte ich, das meine Raspberry Pis regelmässig einen Health Report an einen zentralen Server melden. Damit erhalte ich an einer Stelle die Einsicht, wie es meinen Geräten eigentlich so geht. Für diesen Bericht schreibe ich ein Python Script, das den Zustand von Speicher und Disk Space ausliest und diese Daten per HTTP POST Request alle 10 Minuten versendet. Damit diese Aufgabe pünktlich erledigt wird, verwende ich den Cron Daemon (<code>crond</code>).</p>
+<hr>
+<h2 id="variante-1-cron-jobs-im-container">Variante #1: Cron Jobs im Container</h2>
+<p>Eine Möglich besteht darin, den Cron-Job im Container einzutragen. Der Cron Daemon im Container ist dann zuständig, die Einträge in der cron Tabelle (<code>crontab</code>) zu verarbeiten.</p>
+<p>Wir erzeugen in unserem Projekt die <code>crontab</code> Datei:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">0,10,20,30,40,50 * * * * python /device-reporter/main.py
+<span style="color:#75715e"># crontab requires an empty line at the end of the file</span>
+</code></pre></div><h4 id="dockerfile">Dockerfile:</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Docker" data-lang="Docker"><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> arm32v7/python:3.7-slim-buster</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Update sytem, install requisites, Python </span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># and create &amp; activate virtual environment for my project</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> apt-get update <span style="color:#f92672">&amp;&amp;</span> apt-get install build-essential -y <span style="color:#f92672">&amp;&amp;</span> python3 -m venv /device-reporter/venv <span style="color:#f92672">&amp;&amp;</span> chmod +x /device-reporter/venv/bin/activate <span style="color:#f92672">&amp;&amp;</span> /device-reporter/venv/bin/activate <span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Install project dependencies </span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> requirements.txt /device-reporter/<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">WORKDIR</span><span style="color:#e6db74"> /device-reporter/ </span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> pip install -r requirements.txt <span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Copy my Python source to the target directory</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> ./ /device-reporter/<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> ./devicereporter /device-reporter/devicereporter<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Copy the crontab with my cron job definition</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> ./crontab /etc/cron/crontab<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Initialize the cron table on my Pi</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> crontab /etc/cron/crontab<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Now run the cron daemon (in the foreground -&gt; &#34;-f&#34;)</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">CMD</span> [<span style="color:#e6db74">&#34;crond&#34;</span>, <span style="color:#e6db74">&#34;-f&#34;</span>]<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>Jetzt können wir den Container bauen:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker image build -t cron-device-reporter:latest
+</code></pre></div><p>Danach den Container auf den Raspberry Pi verschieben (per Copy oder per Hub) und ausführen:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker container run -d --rm cron-device-reporter:latest
+</code></pre></div><p>Und nach einer Weil kann ich auf meinen zentralen Server prüfen, ob die Post Requests mit den entsprechenden Daten eintreffen.</p>
+<hr>
+<h2 id="variante-2-cron-jobs-auf-dem-host">Variante #2: Cron Jobs auf dem Host</h2>
+<p>Ein anderer Weg für die pünktliche Ausführung von Cron-Jobs, ist der Crond Daemon des Hosts (d.h. des Raspberry Pis) zu verwenden. Hierfür fügen wir den Eintrag zur Cron-Tabelle des Betriebssystems hinzu, um den Container mit dem Python Script auszuführen.</p>
+<p>Wir passen das Dockerfile so an, das es das Python Script direkt ausgeführt wird. Das Skript beendet sich von selbst, und damit endet anschließend der Container.</p>
+<h4 id="dockerfile-1">Dockerfile:</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Dockerfile" data-lang="Dockerfile"><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> arm32v7/python:3.7-slim-buster</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Update sytem, install requisites, Python </span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># and create &amp; activate virtual environment for my project</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> apt-get update <span style="color:#f92672">&amp;&amp;</span> apt-get install build-essential -y <span style="color:#f92672">&amp;&amp;</span> python3 -m venv /device-reporter/venv <span style="color:#f92672">&amp;&amp;</span> chmod +x /device-reporter/venv/bin/activate <span style="color:#f92672">&amp;&amp;</span> /device-reporter/venv/bin/activate <span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Install project dependencies </span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> requirements.txt /device-reporter/<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">WORKDIR</span><span style="color:#e6db74"> /device-reporter/ </span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> pip install -r requirements.txt <span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Copy my Python source to the target directory</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> ./ /device-reporter/<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> ./devicereporter /device-reporter/devicereporter<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ENTRYPOINT</span> python /device-reporter/main.py <span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>Danach wieder den Container bauen:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker build -t cron-device-reporter:latest
+</code></pre></div><p>Und auf den Raspberry Pi verschieben (per Copy oder per Hub).</p>
+<p>Danach starten wir den crontab Editor des Systems:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pi@raspberrypi:~ $ crontab -e
+
+</code></pre></div><p>Und fügen folgende Zeile hinzu:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">0,10,20,30,40,50 * * * * docker run -rm cron-device-reporter:latest
+</code></pre></div><blockquote>
+<p>Bitte daran denken, das bereits ausgeführte Container wieder entfernt werden, sonst platzt die Festplatte/Disk des Raspberry Pi bald aus allen Nähten! Dafür verwenden wir die Option <code>--rm</code> (remove) damit der ausgeführte Container automatisch entfernt wird.</p>
+</blockquote>
+<h4 id="beispiel-der-crontab">Beispiel der crontab:</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Each task to run has to be defined through a single line</span>
+<span style="color:#75715e"># indicating with different fields when the task will be run</span>
+<span style="color:#75715e"># and what command to run for the task</span>
+<span style="color:#75715e">#</span>
+<span style="color:#75715e"># To define the time you can provide concrete values for</span>
+<span style="color:#75715e"># minute (m), hour (h), day of month (dom), month (mon),</span>
+<span style="color:#75715e"># and day of week (dow) or use &#39;*&#39; in these fields (for &#39;any&#39;).#</span>
+<span style="color:#75715e"># Notice that tasks will be started based on the cron&#39;s system</span>
+<span style="color:#75715e"># daemon&#39;s notion of time and timezones.</span>
+<span style="color:#75715e">#</span>
+<span style="color:#75715e"># Output of the crontab jobs (including errors) is sent through</span>
+<span style="color:#75715e"># email to the user the crontab file belongs to (unless redirected).</span>
+<span style="color:#75715e">#</span>
+<span style="color:#75715e"># For example, you can run a backup of all your user accounts</span>
+<span style="color:#75715e"># at 5 a.m every week with:</span>
+<span style="color:#75715e"># 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/</span>
+<span style="color:#75715e">#</span>
+<span style="color:#75715e"># For more information see the manual pages of crontab(5) and cron(8)</span>
+<span style="color:#75715e">#</span>
+<span style="color:#75715e"># m h  dom mon dow   command</span>
+0,10,20,30,40,50 * * * * docker run -rm cron-device-reporter:latest
+
+</code></pre></div><hr>
+<h2 id="links">Links</h2>
+<ol>
+<li><a href="https://crontab.guru/">crontab guru</a> - A quick and simple editor for cron schedule expression by Cronitor.</li>
+<li><a href="https://docs.docker.com/engine/reference/builder/">Dockerfile Reference</a> - Dockerfile Dokumentation mit der Erklärung aller Ausdrücke.</li>
+</ol>
+
+      </div>
+    </article>
+
+    <hr />
+
+    <div class="post-info">
+      
+      
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        704 Words
+      </p>
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        
+          2020-11-20 17:47
+        
+
+         
+          
+        
+      </p>
+    </div>
+      <hr />
+      <div class="sharing-buttons">
+        
+<a class="resp-sharing-button__link" href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fbrian-heumann.github.io%2fposts%2fcronjobs-and-containers%2f" target="_blank" rel="noopener" aria-label="" title="Share on facebook">
+  <div class="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="mailto:?subject=Cronjobs%20und%20Container&amp;body=https%3a%2f%2fbrian-heumann.github.io%2fposts%2fcronjobs-and-containers%2f" target="_self" rel="noopener" aria-label="" title="Share via email">
+  <div class="resp-sharing-button resp-sharing-button--email resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fbrian-heumann.github.io%2fposts%2fcronjobs-and-containers%2f&amp;title=Cronjobs%20und%20Container&amp;summary=Cronjobs%20und%20Container&amp;source=https%3a%2f%2fbrian-heumann.github.io%2fposts%2fcronjobs-and-containers%2f" target="_blank" rel="noopener" aria-label="" title="Share on linkedin">
+  <div class="resp-sharing-button resp-sharing-button--linkedin resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+    </div>
+  </div>
+</a>
+
+
+<a class="resp-sharing-button__link" href="https://www.xing.com/app/user?op=share;url=https%3a%2f%2fbrian-heumann.github.io%2fposts%2fcronjobs-and-containers%2f;title=Cronjobs%20und%20Container" target="_blank" rel="noopener" aria-label="" title="Share on xing">
+  <div class="resp-sharing-button resp-sharing-button--xing resp-sharing-button--small"><div aria-hidden="true" class="resp-sharing-button__icon resp-sharing-button__icon--solid">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18.188 0c-.517 0-.741.325-.927.66 0 0-7.455 13.224-7.702 13.657.015.024 4.919 9.023 4.919 9.023.17.308.436.66.967.66h3.454c.211 0 .375-.078.463-.22.089-.151.089-.346-.009-.536l-4.879-8.916c-.004-.006-.004-.016 0-.022L22.139.756c.095-.191.097-.387.006-.535C22.056.078 21.894 0 21.686 0h-3.498zM3.648 4.74c-.211 0-.385.074-.473.216-.09.149-.078.339.02.531l2.34 4.05c.004.01.004.016 0 .021L1.86 16.051c-.099.188-.093.381 0 .529.085.142.239.234.45.234h3.461c.518 0 .766-.348.945-.667l3.734-6.609-2.378-4.155c-.172-.315-.434-.659-.962-.659H3.648v.016z"/></svg>
+    </div>
+  </div>
+</a>
+
+      </div>
+
+    
+      <div class="pagination">
+        <div class="pagination__title">
+          <span class="pagination__title-h">Read other posts</span>
+          <hr />
+        </div>
+
+        <div class="pagination__buttons">
+          
+
+          
+            <span class="button next">
+              <a href="https://brian-heumann.github.io/posts/new-website/">
+                <span class="button__text">Neue Webseite</span>
+                <span class="button__icon">→</span>
+              </a>
+            </span>
+          
+        </div>
+      </div>
+    
+
+
+    
+
+  </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2020</span>
+            
+                <span><a href="https://brian-heumann.github.io">Brian Heumann</a></span>
+            
+            
+                <span><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span>
+            <span><a href="https://brian-heumann.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
+        </div>
+    </div>
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span><a href="/credits/">Credits</a></span>
+            <span><a href="/impressum/">Impressum</a></span>
+          </div>
+    </div>
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="/bundle.min.dc716e9092c9820b77f96da294d0120aeeb189b5bcea9752309ebea27fd53bbe6b13cffb2aca8ecf32525647ceb7001f76091de4199ac5a3caa432c070247f5b.js" integrity="sha512-3HFukJLJggt3&#43;W2ilNASCu6xibW86pdSMJ6&#43;on/VO75rE8/7KsqOzzJSVkfOtwAfdgkd5BmaxaPKpDLAcCR/Ww=="></script>
+
+
+
+    </body>
+</html>

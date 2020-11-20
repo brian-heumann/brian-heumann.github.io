@@ -6,8 +6,115 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>de-de</language>
         <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-        <lastBuildDate>Tue, 17 Nov 2020 11:35:50 +0100</lastBuildDate>
+        <lastBuildDate>Fri, 20 Nov 2020 17:47:53 +0100</lastBuildDate>
         <atom:link href="https://brian-heumann.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Cronjobs und Container</title>
+            <link>https://brian-heumann.github.io/posts/cronjobs-and-containers/</link>
+            <pubDate>Fri, 20 Nov 2020 17:47:53 +0100</pubDate>
+            
+            <guid>https://brian-heumann.github.io/posts/cronjobs-and-containers/</guid>
+            <description>Für zeitgesteuerte Aufgaben ist der Cron Daemon auf dem Raspberry Pi immer eine gute Wahl. So möchte ich, das meine Raspberry Pis regelmässig einen Health Report an einen zentralen Server melden. Damit erhalte ich an einer Stelle die Einsicht, wie es meinen Geräten eigentlich so geht. Für diesen Bericht schreibe ich ein Python Script, das den Zustand von Speicher und Disk Space ausliest und diese Daten per HTTP POST Request alle 10 Minuten versendet.</description>
+            <content type="html"><![CDATA[<p>Für zeitgesteuerte Aufgaben ist der Cron Daemon auf dem Raspberry Pi immer eine gute Wahl. So möchte ich, das meine Raspberry Pis regelmässig einen Health Report an einen zentralen Server melden. Damit erhalte ich an einer Stelle die Einsicht, wie es meinen Geräten eigentlich so geht. Für diesen Bericht schreibe ich ein Python Script, das den Zustand von Speicher und Disk Space ausliest und diese Daten per HTTP POST Request alle 10 Minuten versendet. Damit diese Aufgabe pünktlich erledigt wird, verwende ich den Cron Daemon (<code>crond</code>).</p>
+<hr>
+<h2 id="variante-1-cron-jobs-im-container">Variante #1: Cron Jobs im Container</h2>
+<p>Eine Möglich besteht darin, den Cron-Job im Container einzutragen. Der Cron Daemon im Container ist dann zuständig, die Einträge in der cron Tabelle (<code>crontab</code>) zu verarbeiten.</p>
+<p>Wir erzeugen in unserem Projekt die <code>crontab</code> Datei:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">0,10,20,30,40,50 * * * * python /device-reporter/main.py
+<span style="color:#75715e"># crontab requires an empty line at the end of the file</span>
+</code></pre></div><h4 id="dockerfile">Dockerfile:</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Docker" data-lang="Docker"><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> arm32v7/python:3.7-slim-buster</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Update sytem, install requisites, Python </span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># and create &amp; activate virtual environment for my project</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> apt-get update <span style="color:#f92672">&amp;&amp;</span> apt-get install build-essential -y <span style="color:#f92672">&amp;&amp;</span> python3 -m venv /device-reporter/venv <span style="color:#f92672">&amp;&amp;</span> chmod +x /device-reporter/venv/bin/activate <span style="color:#f92672">&amp;&amp;</span> /device-reporter/venv/bin/activate <span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Install project dependencies </span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> requirements.txt /device-reporter/<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">WORKDIR</span><span style="color:#e6db74"> /device-reporter/ </span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> pip install -r requirements.txt <span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Copy my Python source to the target directory</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> ./ /device-reporter/<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> ./devicereporter /device-reporter/devicereporter<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Copy the crontab with my cron job definition</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> ./crontab /etc/cron/crontab<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Initialize the cron table on my Pi</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> crontab /etc/cron/crontab<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Now run the cron daemon (in the foreground -&gt; &#34;-f&#34;)</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">CMD</span> [<span style="color:#e6db74">&#34;crond&#34;</span>, <span style="color:#e6db74">&#34;-f&#34;</span>]<span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>Jetzt können wir den Container bauen:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker image build -t cron-device-reporter:latest
+</code></pre></div><p>Danach den Container auf den Raspberry Pi verschieben (per Copy oder per Hub) und ausführen:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker container run -d --rm cron-device-reporter:latest
+</code></pre></div><p>Und nach einer Weil kann ich auf meinen zentralen Server prüfen, ob die Post Requests mit den entsprechenden Daten eintreffen.</p>
+<hr>
+<h2 id="variante-2-cron-jobs-auf-dem-host">Variante #2: Cron Jobs auf dem Host</h2>
+<p>Ein anderer Weg für die pünktliche Ausführung von Cron-Jobs, ist der Crond Daemon des Hosts (d.h. des Raspberry Pis) zu verwenden. Hierfür fügen wir den Eintrag zur Cron-Tabelle des Betriebssystems hinzu, um den Container mit dem Python Script auszuführen.</p>
+<p>Wir passen das Dockerfile so an, das es das Python Script direkt ausgeführt wird. Das Skript beendet sich von selbst, und damit endet anschließend der Container.</p>
+<h4 id="dockerfile-1">Dockerfile:</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Dockerfile" data-lang="Dockerfile"><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> arm32v7/python:3.7-slim-buster</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Update sytem, install requisites, Python </span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># and create &amp; activate virtual environment for my project</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> apt-get update <span style="color:#f92672">&amp;&amp;</span> apt-get install build-essential -y <span style="color:#f92672">&amp;&amp;</span> python3 -m venv /device-reporter/venv <span style="color:#f92672">&amp;&amp;</span> chmod +x /device-reporter/venv/bin/activate <span style="color:#f92672">&amp;&amp;</span> /device-reporter/venv/bin/activate <span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Install project dependencies </span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> requirements.txt /device-reporter/<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">WORKDIR</span><span style="color:#e6db74"> /device-reporter/ </span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> pip install -r requirements.txt <span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Copy my Python source to the target directory</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> ./ /device-reporter/<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> ./devicereporter /device-reporter/devicereporter<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">ENTRYPOINT</span> python /device-reporter/main.py <span style="color:#960050;background-color:#1e0010">
+</span></code></pre></div><p>Danach wieder den Container bauen:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker build -t cron-device-reporter:latest
+</code></pre></div><p>Und auf den Raspberry Pi verschieben (per Copy oder per Hub).</p>
+<p>Danach starten wir den crontab Editor des Systems:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">pi@raspberrypi:~ $ crontab -e
+
+</code></pre></div><p>Und fügen folgende Zeile hinzu:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">0,10,20,30,40,50 * * * * docker run -rm cron-device-reporter:latest
+</code></pre></div><blockquote>
+<p>Bitte daran denken, das bereits ausgeführte Container wieder entfernt werden, sonst platzt die Festplatte/Disk des Raspberry Pi bald aus allen Nähten! Dafür verwenden wir die Option <code>--rm</code> (remove) damit der ausgeführte Container automatisch entfernt wird.</p>
+</blockquote>
+<h4 id="beispiel-der-crontab">Beispiel der crontab:</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Each task to run has to be defined through a single line</span>
+<span style="color:#75715e"># indicating with different fields when the task will be run</span>
+<span style="color:#75715e"># and what command to run for the task</span>
+<span style="color:#75715e">#</span>
+<span style="color:#75715e"># To define the time you can provide concrete values for</span>
+<span style="color:#75715e"># minute (m), hour (h), day of month (dom), month (mon),</span>
+<span style="color:#75715e"># and day of week (dow) or use &#39;*&#39; in these fields (for &#39;any&#39;).#</span>
+<span style="color:#75715e"># Notice that tasks will be started based on the cron&#39;s system</span>
+<span style="color:#75715e"># daemon&#39;s notion of time and timezones.</span>
+<span style="color:#75715e">#</span>
+<span style="color:#75715e"># Output of the crontab jobs (including errors) is sent through</span>
+<span style="color:#75715e"># email to the user the crontab file belongs to (unless redirected).</span>
+<span style="color:#75715e">#</span>
+<span style="color:#75715e"># For example, you can run a backup of all your user accounts</span>
+<span style="color:#75715e"># at 5 a.m every week with:</span>
+<span style="color:#75715e"># 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/</span>
+<span style="color:#75715e">#</span>
+<span style="color:#75715e"># For more information see the manual pages of crontab(5) and cron(8)</span>
+<span style="color:#75715e">#</span>
+<span style="color:#75715e"># m h  dom mon dow   command</span>
+0,10,20,30,40,50 * * * * docker run -rm cron-device-reporter:latest
+
+</code></pre></div><hr>
+<h2 id="links">Links</h2>
+<ol>
+<li><a href="https://crontab.guru/">crontab guru</a> - A quick and simple editor for cron schedule expression by Cronitor.</li>
+<li><a href="https://docs.docker.com/engine/reference/builder/">Dockerfile Reference</a> - Dockerfile Dokumentation mit der Erklärung aller Ausdrücke.</li>
+</ol>
+]]></content>
+        </item>
         
         <item>
             <title>Neue Webseite</title>

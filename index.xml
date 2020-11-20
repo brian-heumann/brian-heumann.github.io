@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>de-de</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Tue, 17 Nov 2020 11:35:50 +0100</lastBuildDate><atom:link href="https://brian-heumann.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 20 Nov 2020 17:47:53 +0100</lastBuildDate><atom:link href="https://brian-heumann.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cronjobs und Container</title>
+      <link>https://brian-heumann.github.io/posts/cronjobs-and-containers/</link>
+      <pubDate>Fri, 20 Nov 2020 17:47:53 +0100</pubDate>
+      
+      <guid>https://brian-heumann.github.io/posts/cronjobs-and-containers/</guid>
+      <description>Für zeitgesteuerte Aufgaben ist der Cron Daemon auf dem Raspberry Pi immer eine gute Wahl. So möchte ich, das meine Raspberry Pis regelmässig einen Health Report an einen zentralen Server melden. Damit erhalte ich an einer Stelle die Einsicht, wie es meinen Geräten eigentlich so geht. Für diesen Bericht schreibe ich ein Python Script, das den Zustand von Speicher und Disk Space ausliest und diese Daten per HTTP POST Request alle 10 Minuten versendet.</description>
+    </item>
+    
     <item>
       <title>Contact</title>
       <link>https://brian-heumann.github.io/contact/</link>
@@ -26,10 +35,10 @@ LinkedIn https://www.linkedin.com/in/heumann/</description>
       
       <guid>https://brian-heumann.github.io/impressum/</guid>
       <description>Angaben gemäß § 5 TMG
-Brian Heumann Roßbergstr. 21 D-71083 Herrenberg  Vertreten durch:
-Brian Heumann  Kontakt:
-Telefon: +49 176 5679 2929 E-Mail: brian.heumann@thinkregion.com  Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:
-Brian Heumann Roßbergstr. 21 D-71083 Herrenberg  Haftungsausschluss: Haftung für Inhalte
+Brian HeumannRoßbergstr. 21D-71083 Herrenberg Vertreten durch:
+Brian Heumann Kontakt:
+Telefon: +49 176 5679 2929 E-Mail: brian.heumann@thinkregion.com Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:
+Brian HeumannRoßbergstr. 21D-71083 Herrenberg Haftungsausschluss: Haftung für Inhalte
 Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs.</description>
     </item>
     
