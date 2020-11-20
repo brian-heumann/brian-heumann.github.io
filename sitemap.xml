@@ -8,7 +8,22 @@
   </url>
   
   <url>
+    <loc>https://brian-heumann.github.io/tags/iot/</loc>
+    <lastmod>2020-11-20T17:47:53+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://brian-heumann.github.io/posts/</loc>
+    <lastmod>2020-11-20T17:47:53+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://brian-heumann.github.io/tags/raspberrypi/</loc>
+    <lastmod>2020-11-20T17:47:53+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://brian-heumann.github.io/tags/</loc>
     <lastmod>2020-11-20T17:47:53+01:00</lastmod>
   </url>
   
@@ -34,11 +49,6 @@
   
   <url>
     <loc>https://brian-heumann.github.io/posts/new-website/</loc>
-    <lastmod>2020-11-17T11:35:50+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://brian-heumann.github.io/tags/</loc>
     <lastmod>2020-11-17T11:35:50+01:00</lastmod>
   </url>
   
