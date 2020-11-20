@@ -47,10 +47,9 @@
 </span><span style="color:#960050;background-color:#1e0010">
 </span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Now run the cron daemon (in the foreground -&gt; &#34;-f&#34;)</span><span style="color:#960050;background-color:#1e0010">
 </span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">CMD</span> [<span style="color:#e6db74">&#34;crond&#34;</span>, <span style="color:#e6db74">&#34;-f&#34;</span>]<span style="color:#960050;background-color:#1e0010">
-</span></code></pre></div><p>Jetzt können wir den Container bauen:</p>
+</span></code></pre></div><p>Jetzt können wir den Container bauen und ausführen:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker image build -t cron-device-reporter:latest
-</code></pre></div><p>Danach den Container auf den Raspberry Pi verschieben (per Copy oder per Hub) und ausführen:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker container run -d --rm cron-device-reporter:latest
+docker container run -d --rm cron-device-reporter:latest
 </code></pre></div><p>Und nach einer Weil kann ich auf meinen zentralen Server prüfen, ob die Post Requests mit den entsprechenden Daten eintreffen.</p>
 <hr>
 <h2 id="variante-2-cron-jobs-auf-dem-host">Variante #2: Cron Jobs auf dem Host</h2>
@@ -107,7 +106,8 @@
 <span style="color:#75715e"># m h  dom mon dow   command</span>
 0,10,20,30,40,50 * * * * docker run -rm cron-device-reporter:latest
 
-</code></pre></div><hr>
+</code></pre></div><p>Und das war&rsquo;s &ndash; jetzt noch abwarten, ob die HTTP Requests auf dem Server eintreffen&hellip;</p>
+<hr>
 <h2 id="links">Links</h2>
 <ol>
 <li><a href="https://crontab.guru/">crontab guru</a> - A quick and simple editor for cron schedule expression by Cronitor.</li>
