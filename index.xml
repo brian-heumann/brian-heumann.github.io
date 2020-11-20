@@ -18,13 +18,13 @@
     </item>
     
     <item>
-      <title>Contact</title>
+      <title>Kontakt</title>
       <link>https://brian-heumann.github.io/contact/</link>
       <pubDate>Tue, 17 Nov 2020 22:35:56 +0100</pubDate>
       
       <guid>https://brian-heumann.github.io/contact/</guid>
       <description>Email brian.heumann@thinkregion.com
-Telephone +49 (0) 176 5679 2929
+Telephon +49 (0) 176 5679 2929
 LinkedIn https://www.linkedin.com/in/heumann/</description>
     </item>
     
@@ -63,7 +63,7 @@ Als Tech-stack habe ich den Hugo Static Website Generator gewählt. Mit nur geri
     </item>
     
     <item>
-      <title>About Brian Heumann</title>
+      <title>Über Brian Heumann</title>
       <link>https://brian-heumann.github.io/about/</link>
       <pubDate>Tue, 17 Nov 2020 11:34:01 +0100</pubDate>
       
