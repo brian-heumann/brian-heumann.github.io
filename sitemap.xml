@@ -3,6 +3,41 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://brian-heumann.github.io/tags/dart/</loc>
+    <lastmod>2020-12-12T18:10:12+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://brian-heumann.github.io/posts/</loc>
+    <lastmod>2020-12-12T18:10:12+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://brian-heumann.github.io/tags/</loc>
+    <lastmod>2020-12-12T18:10:12+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://brian-heumann.github.io/tags/tdd/</loc>
+    <lastmod>2020-12-12T18:10:12+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://brian-heumann.github.io/tags/testing/</loc>
+    <lastmod>2020-12-12T18:10:12+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://brian-heumann.github.io/posts/testing-dart-exceptions/</loc>
+    <lastmod>2020-12-12T18:10:12+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://brian-heumann.github.io/</loc>
+    <lastmod>2020-12-12T18:10:12+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://brian-heumann.github.io/posts/cronjobs-and-containers/</loc>
     <lastmod>2020-11-20T17:47:53+01:00</lastmod>
   </url>
@@ -13,22 +48,7 @@
   </url>
   
   <url>
-    <loc>https://brian-heumann.github.io/posts/</loc>
-    <lastmod>2020-11-20T17:47:53+01:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://brian-heumann.github.io/tags/raspberrypi/</loc>
-    <lastmod>2020-11-20T17:47:53+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://brian-heumann.github.io/tags/</loc>
-    <lastmod>2020-11-20T17:47:53+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://brian-heumann.github.io/</loc>
     <lastmod>2020-11-20T17:47:53+01:00</lastmod>
   </url>
   

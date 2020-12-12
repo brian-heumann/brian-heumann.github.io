@@ -6,8 +6,52 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>de-de</language>
         <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-        <lastBuildDate>Fri, 20 Nov 2020 17:47:53 +0100</lastBuildDate>
+        <lastBuildDate>Sat, 12 Dec 2020 18:10:12 +0100</lastBuildDate>
         <atom:link href="https://brian-heumann.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Testing Dart Exceptions &amp; Errors</title>
+            <link>https://brian-heumann.github.io/posts/testing-dart-exceptions/</link>
+            <pubDate>Sat, 12 Dec 2020 18:10:12 +0100</pubDate>
+            
+            <guid>https://brian-heumann.github.io/posts/testing-dart-exceptions/</guid>
+            <description>Beim Unit Testing sollte man auch die (bekannten) Ausnahmesituationen testen, z.B. wenn Parameter einer Methode in einem Wertebereich liegen müssen, der Aufrufer aber Werte ausserhalb desselben übergeben kann.
+Beispiel mit Dart In Dart habe ich ein Modell namens WeeklyIntervall entworfen, das eine Map für die Wochentage und ihren Status (true/false) enthält. Mit der Methode set(int day, bool value) kann der Aufrufer bestimmen, ob der Wochentag wiederholt werden soll oder nicht.</description>
+            <content type="html"><![CDATA[<p><img src="/dart-unit-test.png" alt="Dart Unit Test"></p>
+<p>Beim Unit Testing sollte man auch die (bekannten) Ausnahmesituationen testen, z.B. wenn Parameter einer Methode in einem Wertebereich liegen müssen, der Aufrufer aber Werte ausserhalb desselben übergeben kann.</p>
+<h2 id="beispiel-mit-dart">Beispiel mit Dart</h2>
+<p>In Dart habe ich ein Modell namens <code>WeeklyIntervall</code> entworfen, das eine <code>Map</code> für die Wochentage und ihren Status (<code>true/false</code>) enthält. Mit der Methode <code>set(int day, bool value)</code> kann der Aufrufer bestimmen, ob der Wochentag wiederholt werden soll oder nicht.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WeeklyInterval</span> <span style="color:#66d9ef">extends</span> Interval {
+  Map<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">bool</span><span style="color:#f92672">&gt;</span> days <span style="color:#f92672">=</span> {
+    DateTime.monday: <span style="color:#66d9ef">false</span>,
+    DateTime.tuesday: <span style="color:#66d9ef">false</span>,
+    DateTime.wednesday: <span style="color:#66d9ef">false</span>,
+    DateTime.thursday: <span style="color:#66d9ef">false</span>,
+    DateTime.friday: <span style="color:#66d9ef">false</span>,
+    DateTime.saturday: <span style="color:#66d9ef">false</span>,
+    DateTime.sunday: <span style="color:#66d9ef">false</span>
+  };
+
+  WeeklyInterval();
+
+  <span style="color:#66d9ef">void</span> <span style="color:#66d9ef">set</span>(<span style="color:#66d9ef">int</span> day, <span style="color:#66d9ef">bool</span> value) {
+    <span style="color:#66d9ef">assert</span>(DateTime.monday <span style="color:#f92672">&lt;=</span> day <span style="color:#f92672">&amp;&amp;</span> day <span style="color:#f92672">&lt;=</span> DateTime.sunday);
+    <span style="color:#66d9ef">this</span>.days[day] <span style="color:#f92672">=</span> value;
+  }
+}
+</code></pre></div><p>Mittels <code>assert</code> kann ich zur Laufzeit angeben, das der Wertebereich für den Parameter <code>day</code> verletzt wird.</p>
+<h2 id="unit-test">Unit test</h2>
+<p>Diese Fall möchte ich auch explizit testen. Dafür verwende ich folgenden Unit Test:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">[...]
+  test(<span style="color:#e6db74">&#34;Set an incorrect date&#34;</span>, () {
+    WeeklyInterval interval <span style="color:#f92672">=</span> WeeklyInterval();
+    expect(() <span style="color:#f92672">=&gt;</span> interval.<span style="color:#66d9ef">set</span>(<span style="color:#ae81ff">8</span>, <span style="color:#66d9ef">true</span>), throwsAssertionError);
+  });
+[...]
+</code></pre></div><p>Mit <code>() =&gt; interval.set(8, true)</code> weise ich <code>expect</code> an, diese Funktion mit einem Parameter ausserhalb des erwarteten Wertbereichs aufzurufen. Mit dem Matcher throwsAssertError gebe ich an, das <code>expect</code> einen entsprechenden Fehler erwartet. Tritt dieser Fehler nicht auf, dann schlägt expect und damit der Test fehl.</p>
+<p>Mit <code>throwsA(&lt;your-exception-here&gt;)</code> kann <code>expect</code> prüfen, ob bestimmte Ausnahmen geworfen werden.</p>
+]]></content>
+        </item>
         
         <item>
             <title>Cronjobs und Container</title>

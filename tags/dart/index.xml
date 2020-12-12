@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>dart on Welcome</title>
+    <link>https://brian-heumann.github.io/tags/dart/</link>
+    <description>Recent content in dart on Welcome</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>de-de</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Sat, 12 Dec 2020 18:10:12 +0100</lastBuildDate><atom:link href="https://brian-heumann.github.io/tags/dart/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Testing Dart Exceptions &amp; Errors</title>
+      <link>https://brian-heumann.github.io/posts/testing-dart-exceptions/</link>
+      <pubDate>Sat, 12 Dec 2020 18:10:12 +0100</pubDate>
+      
+      <guid>https://brian-heumann.github.io/posts/testing-dart-exceptions/</guid>
+      <description>Beim Unit Testing sollte man auch die (bekannten) Ausnahmesituationen testen, z.B. wenn Parameter einer Methode in einem Wertebereich liegen müssen, der Aufrufer aber Werte ausserhalb desselben übergeben kann.
+Beispiel mit Dart In Dart habe ich ein Modell namens WeeklyIntervall entworfen, das eine Map für die Wochentage und ihren Status (true/false) enthält. Mit der Methode set(int day, bool value) kann der Aufrufer bestimmen, ob der Wochentag wiederholt werden soll oder nicht.</description>
+    </item>
+    
+  </channel>
+</rss>
