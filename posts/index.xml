@@ -50,6 +50,10 @@ Beispiel mit Dart In Dart habe ich ein Modell namens WeeklyIntervall entworfen, 
 [...]
 </code></pre></div><p>Mit <code>() =&gt; interval.set(8, true)</code> weise ich <code>expect</code> an, diese Funktion mit einem Parameter ausserhalb des erwarteten Wertbereichs aufzurufen. Mit dem Matcher throwsAssertError gebe ich an, das <code>expect</code> einen entsprechenden Fehler erwartet. Tritt dieser Fehler nicht auf, dann schlägt expect und damit der Test fehl.</p>
 <p>Mit <code>throwsA(TypeMatcher&lt;your-exception-here&gt;)</code> kann <code>expect</code> prüfen, ob bestimmte Ausnahmen geworfen werden.</p>
+<h2 id="referenzen">Referenzen</h2>
+<ul>
+<li><a href="https://pub.dev/packages/test">Dart Unit Test package</a></li>
+</ul>
 ]]></content>
         </item>
         

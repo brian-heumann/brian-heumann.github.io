@@ -38,7 +38,7 @@ Beispiel mit Dart In Dart habe ich ein Modell namens WeeklyIntervall entworfen, 
 Beispiel mit Dart In Dart habe ich ein Modell namens WeeklyIntervall entworfen, das eine Map für die Wochentage und ihren Status (true/false) enthält. Mit der Methode set(int day, bool value) kann der Aufrufer bestimmen, ob der Wochentag wiederholt werden soll oder nicht.">
 <meta itemprop="datePublished" content="2020-12-12T18:10:12+01:00" />
 <meta itemprop="dateModified" content="2020-12-12T18:10:12+01:00" />
-<meta itemprop="wordCount" content="218">
+<meta itemprop="wordCount" content="223">
 <meta itemprop="image" content="https://brian-heumann.github.io"/>
 
 
@@ -181,6 +181,10 @@ Beispiel mit Dart In Dart habe ich ein Modell namens WeeklyIntervall entworfen, 
 [...]
 </code></pre></div><p>Mit <code>() =&gt; interval.set(8, true)</code> weise ich <code>expect</code> an, diese Funktion mit einem Parameter ausserhalb des erwarteten Wertbereichs aufzurufen. Mit dem Matcher throwsAssertError gebe ich an, das <code>expect</code> einen entsprechenden Fehler erwartet. Tritt dieser Fehler nicht auf, dann schlägt expect und damit der Test fehl.</p>
 <p>Mit <code>throwsA(TypeMatcher&lt;your-exception-here&gt;)</code> kann <code>expect</code> prüfen, ob bestimmte Ausnahmen geworfen werden.</p>
+<h2 id="referenzen">Referenzen</h2>
+<ul>
+<li><a href="https://pub.dev/packages/test">Dart Unit Test package</a></li>
+</ul>
 
       </div>
     </article>
@@ -208,7 +212,7 @@ Beispiel mit Dart In Dart habe ich ein Modell namens WeeklyIntervall entworfen, 
           <line x1="16" y1="17" x2="8" y2="17"></line>
           <polyline points="10 9 9 9 8 9"></polyline>
         </svg>
-        218 Words
+        223 Words
       </p>
 
       <p>
