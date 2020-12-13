@@ -15,7 +15,7 @@
       
       <guid>https://brian-heumann.github.io/posts/testing-dart-exceptions/</guid>
       <description>Beim Unit Testing sollte man auch die (bekannten) Ausnahmesituationen testen, z.B. wenn Parameter einer Methode in einem Wertebereich liegen müssen, der Aufrufer aber Werte ausserhalb desselben übergeben kann.
-Beispiel mit Dart In Dart habe ich ein Modell namens WeeklyIntervall entworfen, das eine Map für die Wochentage und ihren Status (true/false) enthält. Mit der Methode set(int day, bool value) kann der Aufrufer bestimmen, ob der Wochentag wiederholt werden soll oder nicht.</description>
+Beispiel mit Dart In Dart habe ich ein Modell namens WeeklyInterval entworfen, das eine Map für die Wochentage und ihren Status (true/false) enthält. Mit der Methode set(int day, bool value) kann der Aufrufer bestimmen, ob der Wochentag wiederholt werden soll oder nicht.</description>
     </item>
     
   </channel>

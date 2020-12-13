@@ -16,11 +16,11 @@
             
             <guid>https://brian-heumann.github.io/posts/testing-dart-exceptions/</guid>
             <description>Beim Unit Testing sollte man auch die (bekannten) Ausnahmesituationen testen, z.B. wenn Parameter einer Methode in einem Wertebereich liegen müssen, der Aufrufer aber Werte ausserhalb desselben übergeben kann.
-Beispiel mit Dart In Dart habe ich ein Modell namens WeeklyIntervall entworfen, das eine Map für die Wochentage und ihren Status (true/false) enthält. Mit der Methode set(int day, bool value) kann der Aufrufer bestimmen, ob der Wochentag wiederholt werden soll oder nicht.</description>
+Beispiel mit Dart In Dart habe ich ein Modell namens WeeklyInterval entworfen, das eine Map für die Wochentage und ihren Status (true/false) enthält. Mit der Methode set(int day, bool value) kann der Aufrufer bestimmen, ob der Wochentag wiederholt werden soll oder nicht.</description>
             <content type="html"><![CDATA[<p><img src="/dart-unit-test.png" alt="Dart Unit Test"></p>
 <p>Beim Unit Testing sollte man auch die (bekannten) Ausnahmesituationen testen, z.B. wenn Parameter einer Methode in einem Wertebereich liegen müssen, der Aufrufer aber Werte ausserhalb desselben übergeben kann.</p>
 <h2 id="beispiel-mit-dart">Beispiel mit Dart</h2>
-<p>In Dart habe ich ein Modell namens <code>WeeklyIntervall</code> entworfen, das eine <code>Map</code> für die Wochentage und ihren Status (<code>true/false</code>) enthält. Mit der Methode <code>set(int day, bool value)</code> kann der Aufrufer bestimmen, ob der Wochentag wiederholt werden soll oder nicht.</p>
+<p>In Dart habe ich ein Modell namens <code>WeeklyInterval</code> entworfen, das eine <code>Map</code> für die Wochentage und ihren Status (<code>true/false</code>) enthält. Mit der Methode <code>set(int day, bool value)</code> kann der Aufrufer bestimmen, ob der Wochentag wiederholt werden soll oder nicht.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WeeklyInterval</span> <span style="color:#66d9ef">extends</span> Interval {
   Map<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">bool</span><span style="color:#f92672">&gt;</span> days <span style="color:#f92672">=</span> {
     DateTime.monday: <span style="color:#66d9ef">false</span>,
