@@ -6,8 +6,39 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>de-de</language>
         <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-        <lastBuildDate>Sat, 12 Dec 2020 18:10:12 +0100</lastBuildDate>
+        <lastBuildDate>Thu, 31 Dec 2020 19:05:43 +0100</lastBuildDate>
         <atom:link href="https://brian-heumann.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>TDD &amp; Clean Architecture</title>
+            <link>https://brian-heumann.github.io/posts/tdd-clean-architecture/</link>
+            <pubDate>Thu, 31 Dec 2020 19:05:43 +0100</pubDate>
+            
+            <guid>https://brian-heumann.github.io/posts/tdd-clean-architecture/</guid>
+            <description>Ich stieß über den Kurs von Reso TBD, welcher die Themen TDD Entwicklung, Clean Architecture und Flutter behandelt &amp;ndash; alles Themen und Inhalte, die ich für wichtig und richtig finde, und für meine OT Projekte anwende.
+Übersicht Anhand einer Referenzarchitektur nach den Prinzipien von Clean Architecture führt Reso durch eine Serie von Videos und Artikeln durch eine konkrete Implementierung einer Flutter App. Mit dieser App können die Benutzer Informationen zu bestimmten Zahlen von einer REST API im Web einholen und anzeigen lassen.</description>
+            <content type="html"><![CDATA[<p>Ich stieß über den Kurs von Reso TBD, welcher die Themen TDD Entwicklung, Clean Architecture und Flutter behandelt &ndash; alles Themen und Inhalte, die ich für wichtig und richtig finde, und  für meine OT Projekte anwende.</p>
+<h2 id="übersicht">Übersicht</h2>
+<p>Anhand einer Referenzarchitektur nach den Prinzipien von Clean Architecture führt Reso durch eine Serie von Videos und Artikeln durch eine konkrete Implementierung einer Flutter App. Mit dieser App können die Benutzer Informationen zu bestimmten Zahlen von einer REST API im Web einholen und anzeigen lassen. Die App ist nicht mit Features und Besonderheiten überladen, aber komplex genug, um wesentliche Muster für Apps und ihr Zusammenspiel mit verschiedenen Datenquellen zu zeigen.</p>
+<h2 id="architekturebenen">Architekturebenen</h2>
+<p>Grob gesagt teilt Reso die Architektur in 3 Ebenen auf:</p>
+<ul>
+<li>Domäne</li>
+<li>Daten</li>
+<li>User Interface</li>
+</ul>
+<p><img src="/CleanArchitectureOverview.png" alt="Architecture Overview"></p>
+<p>Auf dieser Ebene und in jeder Ebene selbst verfolgt Reso einen Middle-Out Ansatz: Ausgehend von der Domäne und ihren Entitäten entwickelt er zunächst in Richtung des Data Layers die Repositories. Dabei enthält die Domäne nur deren Interfaces, während der Data Layer die Implementierungen derselben enthält. Dadurch werden die Repositories mit ihrer Technolgie etc. austauschbar. Mit Hilfe von <code>Mockito</code> kann man die Interfaces relativ leicht mocken und so Ebene für Ebene die zugehörigen Unit Tests schreiben. Im Verlauf des Projekt entsteht so eine Test Suite mit einer guten Abdeckung der Business Logik.</p>
+<h2 id="exception-vs-return-objekte">Exception vs. Return Objekte</h2>
+<p>In der Architektur werden im Data Layer unter Umständen Exceptions geworfen. Diese werden allesamt gefangen und dafür eigene Exceptions geworfen. Auf der Domänen Ebene werden diese Custom Exceptions gefangen und in Return Objekten verpackt. Diese werden dann an das User Interface übergeben und entsprechend visualisiert. Damit ist das Fehlerhandling sehr definiert und artet nicht gleich in Wildwuschs aus.</p>
+<p>Für die Rückgabeobjekte werden Futures verwendet, und um die Fehlerobjekte mit einzupacken führt Reso die funktionale Library <code>dartz</code> ein. Mit dem Konstrukt <code>Either</code> kann die App  entweder ein Future mit dem Ergebnis zurückliefern oder ein Fehlerobjekt mit weiteren Details zum eigentlichen Fehler. Anfangs war das Handling mit diesem Konstrukt etwas ungewohnt, aber man gewöhnte sich schnell daran, auch weil man viele Unit Tests schrieb und so die API und den Umgang schnell lernte.</p>
+<p>Insgesamt kann ich den Kurs nur empfehlen, ich habe sehr viel praktische Erfahrung mit den verschiedenen Prinzipien in kurzer Zeit gesammelt! Und mit einer solchen klaren Architektur weiß ich auch immer genau, wo und wie ich welchen neuen Features oder Erweiterungen einführe und teste.</p>
+<h2 id="referenzen">Referenzen</h2>
+<ul>
+<li><a href="https://resocoder.com/2019/08/27/flutter-tdd-clean-architecture-course-1-explanation-project-structure/#t-1610012613931">Flutter TDD Clean Architecture Course pt. 1</a></li>
+</ul>
+]]></content>
+        </item>
         
         <item>
             <title>Testing Dart Exceptions &amp; Errors</title>
@@ -50,6 +81,8 @@ Beispiel mit Dart In Dart habe ich ein Modell namens WeeklyInterval entworfen, d
 [...]
 </code></pre></div><p>Mit <code>() =&gt; interval.set(8, true)</code> weise ich <code>expect</code> an, diese Funktion mit einem Parameter ausserhalb des erwarteten Wertbereichs aufzurufen. Mit dem Matcher throwsAssertError gebe ich an, das <code>expect</code> einen entsprechenden Fehler erwartet. Tritt dieser Fehler nicht auf, dann schlägt expect und damit der Test fehl.</p>
 <p>Mit <code>throwsA(TypeMatcher&lt;your-exception-here&gt;)</code> kann <code>expect</code> prüfen, ob bestimmte Ausnahmen geworfen werden.</p>
+<h3 id="update">Update</h3>
+<p><code>throwsA</code> is seit Flutter Version 1.12.1 deprecated. Nunmehr kann man mit dem Ausdruck <code>throwsA(isA&lt;your-exception&gt;())</code> prüfen, ob <code>your-exception</code> geworfen wurde.</p>
 <h2 id="referenzen">Referenzen</h2>
 <ul>
 <li><a href="https://pub.dev/packages/test">Dart Unit Test package</a></li>

@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>de-de</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Sat, 12 Dec 2020 18:10:12 +0100</lastBuildDate><atom:link href="https://brian-heumann.github.io/tags/dart/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 31 Dec 2020 19:05:43 +0100</lastBuildDate><atom:link href="https://brian-heumann.github.io/tags/dart/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>TDD &amp; Clean Architecture</title>
+      <link>https://brian-heumann.github.io/posts/tdd-clean-architecture/</link>
+      <pubDate>Thu, 31 Dec 2020 19:05:43 +0100</pubDate>
+      
+      <guid>https://brian-heumann.github.io/posts/tdd-clean-architecture/</guid>
+      <description>Ich stieß über den Kurs von Reso TBD, welcher die Themen TDD Entwicklung, Clean Architecture und Flutter behandelt &amp;ndash; alles Themen und Inhalte, die ich für wichtig und richtig finde, und für meine OT Projekte anwende.
+Übersicht Anhand einer Referenzarchitektur nach den Prinzipien von Clean Architecture führt Reso durch eine Serie von Videos und Artikeln durch eine konkrete Implementierung einer Flutter App. Mit dieser App können die Benutzer Informationen zu bestimmten Zahlen von einer REST API im Web einholen und anzeigen lassen.</description>
+    </item>
+    
     <item>
       <title>Testing Dart Exceptions &amp; Errors</title>
       <link>https://brian-heumann.github.io/posts/testing-dart-exceptions/</link>
