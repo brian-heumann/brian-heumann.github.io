@@ -15,13 +15,13 @@
             <pubDate>Thu, 31 Dec 2020 19:05:43 +0100</pubDate>
             
             <guid>https://brian-heumann.github.io/posts/tdd-clean-architecture/</guid>
-            <description>Ich stieß über den Kurs von Reso TBD, welcher die Themen TDD Entwicklung, Clean Architecture und Flutter behandelt &amp;ndash; alles Themen und Inhalte, die ich für wichtig und richtig finde, und für meine OT Projekte anwende.
-Übersicht Anhand einer Referenzarchitektur nach den Prinzipien von Clean Architecture führt Reso durch eine Serie von Videos und Artikeln durch eine konkrete Implementierung einer Flutter App. Mit dieser App können die Benutzer Informationen zu bestimmten Zahlen von einer REST API im Web einholen und anzeigen lassen.</description>
-            <content type="html"><![CDATA[<p>Ich stieß über den Kurs von Reso TBD, welcher die Themen TDD Entwicklung, Clean Architecture und Flutter behandelt &ndash; alles Themen und Inhalte, die ich für wichtig und richtig finde, und  für meine OT Projekte anwende.</p>
+            <description>Ich stieß über den Kurs von Matt Rešetár (Reso Coder Labs), welcher die Themen Test Driven Development, Clean Architecture und Flutter behandelt &amp;ndash; alles Themen und Inhalte, die ich für wichtig und richtig finde, und für meine IOT Projekte anwende.
+Übersicht Anhand einer Referenzarchitektur nach den Prinzipien von Clean Architecture führt Matt durch eine Serie von Videos und Artikeln durch eine konkrete Implementierung einer Flutter App. Mit dieser App können die Benutzer Informationen zu bestimmten Zahlen von einer REST API im Web einholen und anzeigen lassen.</description>
+            <content type="html"><![CDATA[<p>Ich stieß über den Kurs von Matt Rešetár (Reso Coder Labs), welcher die Themen Test Driven Development, Clean Architecture und Flutter behandelt &ndash; alles Themen und Inhalte, die ich für wichtig und richtig finde, und  für meine IOT Projekte anwende.</p>
 <h2 id="übersicht">Übersicht</h2>
-<p>Anhand einer Referenzarchitektur nach den Prinzipien von Clean Architecture führt Reso durch eine Serie von Videos und Artikeln durch eine konkrete Implementierung einer Flutter App. Mit dieser App können die Benutzer Informationen zu bestimmten Zahlen von einer REST API im Web einholen und anzeigen lassen. Die App ist nicht mit Features und Besonderheiten überladen, aber komplex genug, um wesentliche Muster für Apps und ihr Zusammenspiel mit verschiedenen Datenquellen zu zeigen.</p>
+<p>Anhand einer Referenzarchitektur nach den Prinzipien von Clean Architecture führt Matt durch eine Serie von Videos und Artikeln durch eine konkrete Implementierung einer Flutter App. Mit dieser App können die Benutzer Informationen zu bestimmten Zahlen von einer REST API im Web einholen und anzeigen lassen. Die App ist nicht mit Features und Besonderheiten überladen, aber komplex genug, um wesentliche Muster für Apps und ihr Zusammenspiel mit verschiedenen Datenquellen zu zeigen.</p>
 <h2 id="architekturebenen">Architekturebenen</h2>
-<p>Grob gesagt teilt Reso die Architektur in 3 Ebenen auf:</p>
+<p>Grob gesagt teilt das Tutorial die Architektur in 3 Ebenen auf:</p>
 <ul>
 <li>Domäne</li>
 <li>Daten</li>
