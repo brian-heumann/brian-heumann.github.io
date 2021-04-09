@@ -72,7 +72,7 @@ Beispiel mit Dart In Dart habe ich ein Modell namens WeeklyInterval entworfen, d
 }
 </code></pre></div><p>Mittels <code>assert</code> kann ich zur Laufzeit angeben, ob der Wertebereich für den Parameter <code>day</code> verletzt wird.</p>
 <h2 id="unit-test">Unit test</h2>
-<p>Diese Fall möchte ich auch explizit testen. Dafür verwende ich folgenden Unit Test:</p>
+<p>Diesen Fall möchte ich explizit testen, dafür verwende ich folgenden Unit Test:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart">[...]
   test(<span style="color:#e6db74">&#34;Set an incorrect date&#34;</span>, () {
     WeeklyInterval interval <span style="color:#f92672">=</span> WeeklyInterval();
