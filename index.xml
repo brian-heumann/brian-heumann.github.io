@@ -7,7 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>de-de</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Thu, 31 Dec 2020 19:05:43 +0100</lastBuildDate><atom:link href="https://brian-heumann.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 20 Jun 2021 12:57:30 +0200</lastBuildDate><atom:link href="https://brian-heumann.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Amundsen vs Scott</title>
+      <link>https://brian-heumann.github.io/posts/amundsen-vs-scott/</link>
+      <pubDate>Sun, 20 Jun 2021 12:57:30 +0200</pubDate>
+      
+      <guid>https://brian-heumann.github.io/posts/amundsen-vs-scott/</guid>
+      <description>Wie anstregend darf es denn sein? In der Folge #716 des Podcasts &amp;ldquo;Art of Manliness&amp;rdquo; von Brett McKay ging es darum, wie man die wichtigsten Ziele und Aufgaben seines Lebens so einfach wie möglich macht. Dabei wurde auch das Rennen zum Südpol zwischen Amundsen und Scott thematisiert, eines meines Lieblingsthemen!
+Soerfm, CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0, via Wikimedia Commons
+Steady, steady Sehr häufig dominiert noch die Haltung, das man sich für die wichtigen Dinge sehr hart und ausdauernd arbeiten muss.</description>
+    </item>
+    
     <item>
       <title>TDD &amp; Clean Architecture</title>
       <link>https://brian-heumann.github.io/posts/tdd-clean-architecture/</link>
@@ -55,10 +66,10 @@ LinkedIn https://www.linkedin.com/in/heumann/</description>
       
       <guid>https://brian-heumann.github.io/impressum/</guid>
       <description>Angaben gemäß § 5 TMG
-Brian HeumannRoßbergstr. 21D-71083 Herrenberg Vertreten durch:
-Brian Heumann Kontakt:
-Telefon: +49 176 5679 2929 E-Mail: brian.heumann@thinkregion.com Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:
-Brian HeumannRoßbergstr. 21D-71083 Herrenberg Haftungsausschluss: Haftung für Inhalte
+Brian Heumann Roßbergstr. 21 D-71083 Herrenberg  Vertreten durch:
+Brian Heumann  Kontakt:
+Telefon: +49 176 5679 2929 E-Mail: brian.heumann@thinkregion.com  Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:
+Brian Heumann Roßbergstr. 21 D-71083 Herrenberg  Haftungsausschluss: Haftung für Inhalte
 Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs.</description>
     </item>
     
